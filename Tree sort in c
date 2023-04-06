@@ -1,0 +1,67 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Define a structure for a node in the binary tree
+struct node {
+    int data;
+    struct node* left;
+    struct node* right;
+};
+
+// Function to create a new node with a given key
+struct node* newNode(int key) {
+    struct node* temp = (struct node*)malloc(sizeof(struct node));
+    temp->data = key;
+    temp->left = temp->right = NULL;
+    return temp;
+}
+
+// Function to insert a new node with a given key in the binary tree
+struct node* insert(struct node* node, int key) {
+    if (node == NULL) return newNode(key);
+    if (key < node->data)
+        node->left = insert(node->left, key);
+    else if (key > node->data)
+        node->right = insert(node->right, key);
+    return node;
+}
+
+// Function to perform an inorder traversal of the binary tree and print the sorted output
+void inorder(struct node* node) {
+    if (node != NULL) {
+        inorder(node->left);
+        printf("%d ", node->data);
+        inorder(node->right);
+    }
+}
+
+// Main function to implement tree sort
+void treeSort(int arr[], int n) {
+    struct node* root = NULL;
+    
+    // Insert all elements of the array into the binary tree
+    for (int i = 0; i < n; i++) {
+        root = insert(root, arr[i]);
+    }
+    
+    // Perform an inorder traversal of the binary tree and print the sorted output
+    inorder(root);
+}
+
+// Driver function to test the above implementation
+int main() {
+    int arr[] = {5, 3, 8, 4, 2, 7, 1, 10, 6, 9};
+    int n = sizeof(arr)/sizeof(arr[0]);
+    
+    printf("Original array:\n");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n\n");
+    
+    printf("Sorted array:\n");
+    treeSort(arr, n);
+    printf("\n\n");
+    
+    return 0;
+}
