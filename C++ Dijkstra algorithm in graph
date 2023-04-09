@@ -1,0 +1,58 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <utility>
+
+using namespace std;
+
+const int INF = 1e9;
+
+typedef pair<int, int> pii;
+
+int n, m, s; // n = number of nodes, m = number of edges, s = source node
+vector<pii> adj[10001]; // adjacency list of the graph
+vector<int> dist(10001, INF); // distance array, initialized to infinity
+priority_queue<pii, vector<pii>, greater<pii>> pq; // min-heap priority queue
+
+void dijkstra(int s) {
+    pq.push({0, s}); // push the source node into the priority queue with distance 0
+    dist[s] = 0; // the distance from source to itself is 0
+
+    while (!pq.empty()) {
+        int u = pq.top().second; // extract the node with the smallest distance
+        pq.pop();
+
+        // visit all the neighbors of the extracted node
+        for (auto v : adj[u]) {
+            if (dist[v.first] > dist[u] + v.second) {
+                // if the distance to the neighbor can be improved, update the distance
+                dist[v.first] = dist[u] + v.second;
+                pq.push({dist[v.first], v.first}); // push the updated distance and node into the priority queue
+            }
+        }
+    }
+}
+
+int main() {
+    cin >> n >> m >> s; // read in the input
+
+    // read in the edges of the graph
+    for (int i = 0; i < m; i++) {
+        int u, v, w;
+        cin >> u >> v >> w;
+        adj[u].push_back({v, w});
+    }
+
+    dijkstra(s); // run Dijkstra's algorithm starting from the source node
+
+    // output the shortest distance from the source node to every other node
+    for (int i = 1; i <= n; i++) {
+        if (dist[i] == INF) {
+            cout << "INF ";
+        } else {
+            cout << dist[i] << " ";
+        }
+    }
+
+    return 0;
+}
