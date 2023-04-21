@@ -1,0 +1,26 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+   int arr[] = {10, 20, 30, 40, 50};   // Sample array
+   int n = sizeof(arr)/sizeof(arr[0]); // Length of array
+   int largest = arr[0], second_largest = INT_MIN;
+
+   // Traverse through the array and find the largest and second-largest elements
+   for (int i = 1; i < n; i++) {
+      if (arr[i] > largest) {
+         second_largest = largest;
+         largest = arr[i];
+      } else if (arr[i] > second_largest && arr[i] != largest) {
+         second_largest = arr[i];
+      }
+   }
+
+   if (second_largest != INT_MIN) {
+      cout << "The second-largest element in the array is " << second_largest << endl;
+   } else {
+      cout << "There is no second-largest element in the array." << endl;
+   }
+
+   return 0;
+}
