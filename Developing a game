@@ -1,0 +1,114 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+// Base character class
+class Character {
+protected:
+    string name;
+    int health;
+    int level;
+public:
+    Character(string name, int health, int level) : name(name), health(health), level(level) {}
+    virtual void use_ability() = 0;
+    void display_status() {
+        cout << "Name: " << name << endl;
+        cout << "Health: " << health << endl;
+        cout << "Level: " << level << endl;
+    }
+};
+
+// Warrior class that inherits from Character
+class Warrior : public Character {
+public:
+    Warrior(string name, int health, int level) : Character(name, health, level) {}
+    void use_ability() {
+        cout << "Warrior uses ability: Charge!" << endl;
+    }
+};
+
+// Archer class that inherits from Character
+class Archer : public Character {
+public:
+    Archer(string name, int health, int level) : Character(name, health, level) {}
+    void use_ability() {
+        cout << "Archer uses ability: Rapid Shot!" << endl;
+    }
+};
+
+// Mage class that inherits from Character
+class Mage : public Character {
+public:
+    Mage(string name, int health, int level) : Character(name, health, level) {}
+    void use_ability() {
+        cout << "Mage uses ability: Fireball!" << endl;
+    }
+};
+
+// Ability class
+class Ability {
+protected:
+    string name;
+    int damage;
+    int mana_cost;
+public:
+    Ability(string name, int damage, int mana_cost) : name(name), damage(damage), mana_cost(mana_cost) {}
+    virtual void execute() = 0;
+};
+
+// Charge ability class that inherits from Ability
+class Charge : public Ability {
+public:
+    Charge() : Ability("Charge", 50, 20) {}
+    void execute() {
+        cout << "Warrior uses " << name << " ability, dealing " << damage << " damage and costing " << mana_cost << " mana." << endl;
+    }
+};
+
+// Rapid Shot ability class that inherits from Ability
+class RapidShot : public Ability {
+public:
+    RapidShot() : Ability("Rapid Shot", 30, 10) {}
+    void execute() {
+        cout << "Archer uses " << name << " ability, dealing " << damage << " damage and costing " << mana_cost << " mana." << endl;
+    }
+};
+
+// Fireball ability class that inherits from Ability
+class Fireball : public Ability {
+public:
+    Fireball() : Ability("Fireball", 70, 30) {}
+    void execute() {
+        cout << "Mage uses " << name << " ability, dealing " << damage << " damage and costing " << mana_cost << " mana." << endl;
+    }
+};
+
+int main() {
+    // Create some characters
+    Warrior warrior("Bob the Warrior", 100, 10);
+    Archer archer("Sara the Archer", 80, 12);
+    Mage mage("Alice the Mage", 60, 15);
+    
+    // Create some abilities
+    Charge charge;
+    RapidShot rapidShot;
+    Fireball fireball;
+    
+    // Assign abilities to characters
+    warrior.use_ability = &charge.execute;
+    archer.use_ability = &rapidShot.execute;
+    mage.use_ability = &fireball.execute;
+    
+    // Let the characters use their abilities
+    warrior.use_ability();
+    archer.use_ability();
+    mage.use_ability();
+    
+    // Display the status of the characters
+    warrior.display_status();
+    archer.display
+
+
+
